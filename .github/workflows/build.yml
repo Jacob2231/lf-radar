@@ -1,4 +1,4 @@
-name: Build LF Radar (Momentum)
+name: Build LF Radar (Momentum stable)
 
 on:
   push:
@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Clone Momentum firmware
         run: |
           git clone https://github.com/Next-Flip/Momentum-Firmware.git firmware
 
-      - name: Copy app
+      - name: Copy application
         run: |
           mkdir -p firmware/applications_user/lf_radar
           cp lf_radar.c firmware/applications_user/lf_radar/
@@ -27,8 +27,14 @@ jobs:
           cd firmware
           ./fbt fap_dist BUILD_APPS=lf_radar
 
-      - name: Upload artifact
+      - name: Debug - list build output
+        run: |
+          echo "Searching for FAP files..."
+          find firmware/build -type f -name "*.fap" || true
+
+      - name: Upload FAP (auto-detect)
         uses: actions/upload-artifact@v4
         with:
           name: lf_radar
           path: firmware/build/**/*.fap
+          if-no-files-found: error
