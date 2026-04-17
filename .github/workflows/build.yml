@@ -25,7 +25,7 @@ jobs:
       - name: Build FAP
         run: |
           cd firmware
-          ./fbt fap_dist BUILD_APPS=lf_radar
+          ./fbt fap_dist APP_DIRS=applications_user/lf_radar
 
       - name: Debug - list build output
         run: |
