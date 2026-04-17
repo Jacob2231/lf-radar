@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lf_radar
-          path: firmware/build/f7-firmware-D/.extapps/lf_radar.fap
+          path: firmware/build/**/*.fap
